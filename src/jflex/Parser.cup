@@ -1,0 +1,79 @@
+package jflex;
+
+import java_cup.runtime.*;
+import java.util.*;
+import java.io.*;
+
+
+parser code {:
+    public String erro;
+ 
+    public void syntax_error (Symbol s) {
+        erro = "Erro de sintaxe";
+    }
+
+    public String getErro(){
+        return erro;
+    }
+
+    /*public void report_error(String message, Object info)  {
+        System.out.println("Warning - " + message);
+    }
+
+    public void report_fatal_error(String message, Object info)  {
+        System.out.println("Error - " + message);       
+    }*/
+
+:};
+
+
+terminal ID,ENDING_LINE,EXPOENT,STRINGS,ASSIGNMENT;
+terminal INT,DOUBLE,FLOAT_SIGN,ERROR,SELECTION,REPETITION;
+terminal OP_LOGICO,OP_ARITMETICO,OP_RELACIONAL,NUM_REAL,RIGHT_BRACKET,LEFT_BRACKET,COMMA,PARAMETERS;
+terminal END_PROGRAM, START_PROGRAM, FUNCTION, COMMENT;
+
+non terminal atribuicao, valor, potencia, operacao_aritmetica, operacao_logica, operacao_relacional;
+non terminal instrucao_repeticao, instrucao_decisao, inicio, statements, statement;
+
+start with statements;
+
+statements ::= statements statement | statement ;
+
+statement ::= potencia
+    | operacao_aritmetica
+    | operacao_logica
+    | operacao_relacional
+    | atribuicao
+    | instrucao_decisao;
+
+
+valor ::= INT | DOUBLE | NUM_REAL | ID;
+
+potencia ::= valor EXPOENT valor;
+
+operacao_aritmetica ::= valor OP_ARITMETICO valor
+    | valor OP_ARITMETICO operacao_aritmetica
+    | valor OP_ARITMETICO potencia;
+
+operacao_logica ::= valor OP_LOGICO valor
+    | valor OP_LOGICO operacao_logica
+    | valor OP_LOGICO potencia;
+
+operacao_relacional ::= valor OP_RELACIONAL valor
+    | valor OP_RELACIONAL operacao_relacional
+    | valor OP_RELACIONAL potencia;
+
+atribuicao ::= ID ASSIGNMENT valor ENDING_LINE
+    | ID ASSIGNMENT STRINGS ENDING_LINE
+    | ID ASSIGNMENT potencia ENDING_LINE
+    | ID ASSIGNMENT operacao_logica ENDING_LINE
+    | ID ASSIGNMENT operacao_relacional ENDING_LINE
+    | ID ASSIGNMENT operacao_aritmetica ENDING_LINE;
+
+instrucao_decisao ::= SELECTION PARAMETERS operacao_aritmetica PARAMETERS LEFT_BRACKET statements RIGHT_BRACKET ENDING_LINE
+    | SELECTION PARAMETERS operacao_logica PARAMETERS LEFT_BRACKET statements RIGHT_BRACKET ENDING_LINE
+    | SELECTION PARAMETERS operacao_relacional PARAMETERS LEFT_BRACKET statements RIGHT_BRACKET ENDING_LINE;
+
+
+
+
