@@ -6,8 +6,13 @@ import java.io.*;
 
 
 parser code {:
+    public String erro;
+ 
+    public String getErro(){
+        return erro;
+    }
 
-   public void report_error(String message, Object info)  {
+    public void report_error(String message, Object info)  {
         System.out.println("Warning - " + message);
     }
 

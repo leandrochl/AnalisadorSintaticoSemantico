@@ -354,7 +354,7 @@ public class InterfaceTeste extends javax.swing.JFrame {
             result = p.parse().value;
             jTextArea3.setText("Aceito");
         } catch (Exception e) {
-            jTextArea3.setText(p.toString());
+            jTextArea3.setText(p.getErro());
         }
     }//GEN-LAST:event_jButton5ActionPerformed
 
@@ -366,7 +366,7 @@ public class InterfaceTeste extends javax.swing.JFrame {
             result = p.parse().value;
             jTextArea3.setText("Aceito");
         } catch (Exception e) {
-            jTextArea3.setText(p.toString());
+            jTextArea3.setText(p.getErro());
 
         }
     }//GEN-LAST:event_jButton4ActionPerformed
