@@ -1,0 +1,4 @@
+@nome <- |leandro|;
+if :2+5>4:{
+@resultado <- 44;
+}
